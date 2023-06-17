@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+
+  front:
+    image: node:alpine
+    tty: true
+    stdin_open: true
+    working_dir: /usr/src/server
+    volumes:
+      - ./front:/usr/src/server
+    ports:
+      - ${PORT_FRONT}:${PORT_FRONT}
+
+  back:
+    image: node:alpine
+    tty: true
+    stdin_open: true
+    working_dir: /usr/src/server
+    volumes:
+      - ./back:/usr/src/server
+    ports:
+        - ${PORT_BACK}:${PORT_BACK}
+
+  database:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+
+  pgadmin:
+    container_name: pgAdmin
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+    - 5050:80
+    depends_on:
+    - database
+
+volumes:
+  postgres:
