@@ -1,36 +1,36 @@
-version: "3.8"
+version: "3"
 
 services:
-
-  front:
-    image: node:alpine
-    tty: true
-    stdin_open: true
-    working_dir: /usr/src/server
-    volumes:
-      - ./front:/usr/src/server
-    ports:
-      - ${PORT_FRONT}:${PORT_FRONT}
-
   back:
-    image: node:alpine
+    image: node:19.0.0-alpine
+    user: node
+    working_dir: /usr/src/server
     tty: true
     stdin_open: true
-    working_dir: /usr/src/server
+    ports:
+      - 4000:4000
     volumes:
       - ./back:/usr/src/server
-    ports:
-        - ${PORT_BACK}:${PORT_BACK}
 
-  database:
-    image: postgres:15-alpine
-    environment:
-      POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
+  front:
+    image: node:19.0.0-alpine
+    user: node
+    working_dir: /usr/src/server
+    tty: true
+    stdin_open: true
     ports:
-      - target: 5432
-        published: 5432
-        protocol: tcp
+      - 3000:3000
+    volumes:
+      - ./front:/usr/src/server
+
+  postgresql:
+    image: postgres:15.2-alpine3.17
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
 
   pgadmin:
     container_name: pgAdmin
@@ -42,7 +42,7 @@ services:
     ports:
     - 5050:80
     depends_on:
-    - database
+    - postgresql
 
 volumes:
   postgres:
