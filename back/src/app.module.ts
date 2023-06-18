@@ -11,15 +11,15 @@ import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-          type: 'postgres',
-          host: 'localhost',
-          port: 5432,
-          username: 'postgres',
-          password: 'postgres',
-          database: 'db_analytics',
-          autoLoadEntities: true,
-          synchronize: true,
-        }),
+      type: "postgres",
+      database: "database",
+      username: process.env.DB_USER || 'user',
+      password: process.env.DB_PASSWORD || 'password',
+      host: process.env.DB_HOST || 'postgresql',
+      port: parseInt(process.env.DB_PORT) || 5432,
+      autoLoadEntities: true,
+      synchronize: true
+    }),
     SdkModule,
     AuthenticationModule,
     UserModule,
