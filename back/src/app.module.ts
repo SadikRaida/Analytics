@@ -6,6 +6,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UserModule } from './user-management/user/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 
 @Module({
@@ -20,6 +21,9 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true
     }),
+    MongooseModule.forRoot(
+      'mongodb://root:password@mongo:27017'
+      ), //mongodb://<username>:<password>@<host>:<port>/<database>
     SdkModule,
     AuthenticationModule,
     UserModule,
