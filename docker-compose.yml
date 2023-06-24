@@ -29,8 +29,10 @@ services:
       POSTGRES_DB: database
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    volumes:
-      - ./postgresql:/var/lib/postgresql/data
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
 
   mongo:
       image: mongo
@@ -57,5 +59,4 @@ services:
     - postgresql
 
 volumes:
-  postgres:
   db-data: {}

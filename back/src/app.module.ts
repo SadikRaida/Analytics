@@ -13,7 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      database: "database",
+      database: process.env.DB_NAME || 'database',
       username: process.env.DB_USER || 'user',
       password: process.env.DB_PASSWORD || 'password',
       host: process.env.DB_HOST || 'postgresql',
