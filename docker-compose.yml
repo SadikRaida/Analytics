@@ -26,11 +26,36 @@ services:
   postgresql:
     image: postgres:15.2-alpine3.17
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - ./postgresql:/var/lib/postgresql/data
+      POSTGRES_DB: database
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+
+  mongo:
+      image: mongo
+      ports:
+        - 27017:27017
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+      volumes:
+        - ./SampleCollections:/usr/local/sampleCollections
+        - db-data:/data/db
+      working_dir: /usr/local/sampleCollections
+
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8080:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongo
 
   pgadmin:
     container_name: pgAdmin
@@ -45,4 +70,4 @@ services:
     - postgresql
 
 volumes:
-  postgres:
+  db-data: {}

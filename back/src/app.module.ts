@@ -6,13 +6,15 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { UserModule } from './user-management/user/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
+import { EventsModule } from './events/events.module';
 
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      database: "database",
+      database: process.env.DB_NAME || 'database',
       username: process.env.DB_USER || 'user',
       password: process.env.DB_PASSWORD || 'password',
       host: process.env.DB_HOST || 'postgresql',
@@ -20,10 +22,14 @@ import { ConfigModule } from '@nestjs/config';
       autoLoadEntities: true,
       synchronize: true
     }),
+    MongooseModule.forRoot(
+      'mongodb://root:password@mongo:27017'
+      ), //mongodb://<username>:<password>@<host>:<port>/<database>
     SdkModule,
     AuthenticationModule,
     UserModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
+    EventsModule
   ],
   controllers: [AppController],
   providers: [AppService],
