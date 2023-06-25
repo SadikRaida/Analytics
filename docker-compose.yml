@@ -46,6 +46,17 @@ services:
         - db-data:/data/db
       working_dir: /usr/local/sampleCollections
 
+  mongo-express:
+    image: mongo-express
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8080:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongo
+
   pgadmin:
     container_name: pgAdmin
     image: dpage/pgadmin4

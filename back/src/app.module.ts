@@ -7,6 +7,7 @@ import { UserModule } from './user-management/user/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { EventsModule } from './events/events.module';
 
 
 @Module({
@@ -27,7 +28,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     SdkModule,
     AuthenticationModule,
     UserModule,
-    ConfigModule.forRoot()
+    ConfigModule.forRoot(),
+    EventsModule
   ],
   controllers: [AppController],
   providers: [AppService],
