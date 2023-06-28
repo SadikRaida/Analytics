@@ -14,7 +14,10 @@ app.use(
 );
 
 app.use((req, res, next) => {
-    req.sendEvent({});
+    req.sendEvent({
+        tag:'', //définir tag
+        event_type: '', //exemple : pageview
+    });
     next();
 });
 
