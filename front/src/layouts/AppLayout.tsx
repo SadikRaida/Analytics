@@ -1,11 +1,11 @@
+import Header from "./Header";
 import {Outlet} from "react-router-dom";
 import Box from "@mui/material/Box";
-import React from "react";
 
 export default function AppLayout(){
     return (
         <>
-            {/*<Header/>*/}
+            <Header/>
             <Box sx={{
                 paddingTop:'100px',
                 minHeight:'100vh',

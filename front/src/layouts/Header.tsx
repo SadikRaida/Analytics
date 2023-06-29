@@ -1,33 +1,121 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+import Box from '@mui/material/Box';
+import Slide from '@mui/material/Slide';
+import {Fragment, ReactElement, useState} from "react";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import DragHandleIcon from "@mui/icons-material/DragHandle";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import LogoutIcon from '@mui/icons-material/Logout';
+import styles from "./Header.module.css";
+import {ROLES} from "../rooter/permissions.ts";
+import {
+    Drawer,
+    IconButton,
+    useTheme,
+    styled,
+    Divider,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText
+} from "@mui/material";
+import {NavLink, useNavigate} from 'react-router-dom';
+import {useAuthContext} from "../providers/AuthProvider.tsx";
 
-const pages = ['Login', 'Register'];
+interface Props {
+    /**
+     * Injected by the documentation to work in an iframe.
+     * You won't need it on your project.
+     */
+    window?: () => Window;
+    children: ReactElement;
+}
 
-export const Header = () => {
+export default function Header(props: Props) {
+
+    const {user} = useAuthContext();
+
+    const theme = useTheme();
+    const navigate = useNavigate();
+
+    // const logout = () => {
+    //     localStorage.removeItem('token');
+    //     navigate('/login');
+    // }
+
+    const links = [
+        {name: 'Login', path: '/login'},
+        {name: 'Register', path: '/register'},
+    ];
+
+    interface Link {
+        isPending: boolean,
+        isActive: boolean
+    }
 
     return (
-        <>
-            <AppBar position="static">
-                <Container maxWidth="xl">
-                    <Toolbar disableGutters>
-                        <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
-                            {pages.map((page) => (
-                                <Button
-                                    key={page}
-                                    onClick={() => {}}
-                                    sx={{my: 2, color: 'white', display: 'block'}}
+        <Fragment>
+            <AppBar>
+                <Toolbar>
+                    <Box sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        width: '100%'
+                    }}>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                width: '100%'
+                            }}
+                        >
+                            <span>
+                                <NavLink
+                                    to={'/'}
+                                    style={{
+                                        color: theme.palette.secondary.main,
+                                        textDecoration: 'none',
+                                        fontWeight: 'bold',
+                                        margin: '0 10px',
+                                    }}
                                 >
-                                    {page}
-                                </Button>
-                            ))}
+                                    ANALYTICS
+                                </NavLink>
+                            </span>
+                            <Box
+                                sx={{
+                                    display: {xs: 'none', md: 'flex'},
+                                }}
+                            >
+                                {
+                                    links.map((link) => {
+                                        return (
+                                            <NavLink
+                                                className={({isActive, isPending}: Link) =>
+                                                    isPending ? "" : isActive ? styles.active : ""
+                                                }
+                                                to={link.path} key={link.name}
+                                                style={{
+                                                    color: theme.palette.secondary.main,
+                                                    textDecoration: 'none',
+                                                    margin: '0 10px',
+                                                }}
+                                            >
+                                                {link.name}
+                                            </NavLink>
+                                        )
+                                    })
+                                }
+                            </Box>
                         </Box>
-                    </Toolbar>
-                </Container>
+                    </Box>
+                </Toolbar>
             </AppBar>
-        </>
-    );
+        </Fragment>
+    )
+
 }

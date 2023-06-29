@@ -8,9 +8,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {Home} from '@mui/icons-material';
-import DashboardAdminOnglet from "./admin/Onglets/DashboardAdminOnglet";
-import {Graphs} from "./Onglets/Graphs";
+import {Home, People} from '@mui/icons-material';
+import {DashboardOnglet} from "./Onglets/DashboardOnglet";
+import {AdminOnglet} from "./OngletSupport/AdminOnglet";
 
 const drawerWidth = 240;
 
@@ -21,28 +21,25 @@ export const Dashboard = () => {
     const links = [
         {
             name: 'Dashboard',
-            icon: < Home/>
-        },
-        {
-            name: 'Graphs',
-            icon: < ListItem/>
+            icon: < Home />
         }
     ]
-    const linksAdmin = [
+
+    const linksSupport = [
         {
-            name: 'AdminDashboard',
-            icon: < Home/>
+            name: 'Admin',
+            icon: < People/>
         }
     ]
 
     const getOnglet = () => {
         switch (onglet) {
-            case 'AdminDashboard':
-                return <DashboardAdminOnglet/>
-            case 'Graphs':
-                return <Graphs/>
+            case 'Dashboard':
+                return <DashboardOnglet/>
+            case 'Admin':
+                return <AdminOnglet/>
             default:
-                return <Dashboard/>
+                return <DashboardOnglet/>
         }
     }
 
@@ -78,7 +75,7 @@ export const Dashboard = () => {
                     <hr/>
                     <List>
                         {
-                            linksAdmin.map((link, index) => {
+                            linksSupport.map((link, index) => {
                                 return (
                                     <ListItem key={index} disablePadding onClick={() => setOnglet(link.name)}>
                                         <ListItemButton>

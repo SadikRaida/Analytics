@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField} from "@mui/material";
+import {Box, Button, Stack, TextField, Grid} from "@mui/material";
 import AuthService from "../services/AuthService.ts";
 import {useState} from "react";
 import {useAuthContext} from "../providers/AuthProvider.tsx";
@@ -14,26 +14,21 @@ export const Login = () => {
     const validateForm = () => {
         AuthService.login(email, password).then((response) => {
             setUser(response) ;
-            if (response.access_token) {
-                localStorage.setItem('token', response.access_token)
-                navigate('/') ;
-            }
         })
     }
 
     return (
         <Box
             sx={{
-                background:"url(/login.png)",
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat',
                 height: '100vh',
                 display: 'flex',
                 justifyContent: 'center',
             }}
         >
-            <Stack>
-                <img width={500}  src={'/carbon-logo.png'}/>
+            <Grid display={'flex'} flexDirection={'column'} justifyContent={'center'} alignItems={'center'} sx={{
+                width: '30%',
+            }}>
+                <h2>Login</h2>
                 <TextField
                     id="email"
                     label="Email"
@@ -42,6 +37,7 @@ export const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     sx={{
                         borderRadius: 20,
+                        width: '100%',
                         marginBottom: 2,
                     }}
                 />
@@ -54,16 +50,17 @@ export const Login = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     sx={{
                         borderRadius: 20,
+                        width: '100%',
                     }}
                 />
                 <Button variant={"outlined"} onClick={() => validateForm()} style={{
                     marginTop: 20,
+                    width: '100%',
                     backgroundColor: "#00BB7E",
                 }}>
                     Se connecter
                 </Button>
-            </Stack>
-
+            </Grid>
         </Box>
 
     )

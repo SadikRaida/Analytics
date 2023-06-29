@@ -1,9 +1,14 @@
+import CssBaseline from "@mui/material/CssBaseline";
 import {createRoot} from 'react-dom/client'
 import Router from './rooter/Router'
+import './index.css'
+import {createTheme, ThemeProvider} from '@mui/material/styles'
+import AuthProvider from "./providers/AuthProvider.tsx";
 import {BrowserRouter, useLocation} from "react-router-dom";
-import React, {StrictMode, useLayoutEffect} from "react";
-import CssBaseline from "@mui/material/CssBaseline";
-import {createTheme} from "@mui/material";
+import {StrictMode, useLayoutEffect} from "react";
+import ModalProvider from "./providers/ModalProvider.tsx";
+import SnackbarProvider from "react-mui-snackbar" ;
+
 
 const theme = createTheme({
     palette: {
@@ -51,19 +56,21 @@ const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(
     <StrictMode>
-        {/*<AuthProvider>*/}
+        <AuthProvider>
             <ThemeProvider theme={theme}>
-                {/*<SnackbarProvider>*/}
                 <CssBaseline/>
+                <SnackbarProvider>
+                    <ModalProvider>
                         <BrowserRouter>
                             <Wrapper>
                                 <Router>
                                 </Router>
                             </Wrapper>
                         </BrowserRouter>
-                {/*</SnackbarProvider>*/}
+                    </ModalProvider>
+                </SnackbarProvider>
           </ThemeProvider>
-      {/*</AuthProvider>*/}
+      </AuthProvider>
   </StrictMode>,
 
 )
