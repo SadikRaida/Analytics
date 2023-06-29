@@ -1,6 +1,5 @@
 import {createContext, ReactNode, SetStateAction, useContext, useEffect, useState} from "react";
 import AuthService from "../services/AuthService.ts";
-import React from 'react'
 
 interface AuthContextInterface {
     user: User;
@@ -18,34 +17,26 @@ const AuthContext = createContext<AuthContextInterface>({} as AuthContextInterfa
 export default function AuthProvider({children}: { children: ReactNode }) {
 
 
-    // const [user, setUser] = useState<User>();
-    //
-    //
-    // useEffect(() => {
-    //     if(!user ) {
-    //         if (localStorage.getItem("token") === null) {
-    //             if (window.location.pathname !== "/login")
-    //                 window.location.pathname = "/login";
-    //         }
-    //     }
-    //
-    //     AuthService.profile().then((response: SetStateAction<User | undefined>) => {
-    //         setUser(response) ;
-    //     }).catch((error) => {
-    //         localStorage.removeItem("token");
-    //         if (window.location.pathname !== "/login")
-    //             window.location.pathname = "/login";
-    //     });
-    //
-    // },[])
-    //
-    //
-    //
-    // return (
-    //     <AuthContext.Provider value={{user , setUser}}>
-    //         {children}
-    //     </AuthContext.Provider>
-    // )
+    const [user, setUser] = useState<User>();
+
+
+    useEffect(() => {
+        // if(!user ) {
+        //     if (localStorage.getItem("token") === null) {
+        //         if (window.location.pathname !== "/login")
+        //             window.location.pathname = "/login";
+        //     }
+        // }
+
+    },[])
+
+
+
+    return (
+        <AuthContext.Provider value={{user , setUser}}>
+            {children}
+        </AuthContext.Provider>
+    )
 
 }
 

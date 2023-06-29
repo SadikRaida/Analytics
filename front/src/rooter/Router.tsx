@@ -1,7 +1,7 @@
-import React, {ReactNode, Suspense} from "react";
+import {ReactNode, Suspense} from "react";
+import HomePage from "../pages/HomePage.tsx";
 import {Route, Routes} from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
-import {Dashboard} from "../pages/dashboard";
 import {Login} from "../pages/Login";
 import {Register} from "../pages/Register";
 
@@ -15,22 +15,21 @@ export const useRoutes = () => {
 
     const routes: Route[] = [
         {
+            path: "/",
+            name: "Home",
+            element:
+                <HomePage/>
+        },{
             path: "/login",
-            name: "Login",
+            name: "Home",
             element:
                 <Login/>
         },{
             path: "/register",
-            name: "Register",
+            name: "Home",
             element:
                 <Register/>
-        },
-        {
-            path:'/',
-            name:'Dashboard',
-            element:
-                <Dashboard/>
-        },
+        }
     ] ;
 
 
@@ -46,9 +45,10 @@ export default function Router() {
            <Routes>
                <Route path={'/'} element={<AppLayout/>}>
                    {
-                          routes.map(route => route)
+                       routes.map(route => route)
                    }
                </Route>
+                {/*<Route path={'/login'} element={<Login/>}/>*/}
            </Routes>
        </Suspense>
    )

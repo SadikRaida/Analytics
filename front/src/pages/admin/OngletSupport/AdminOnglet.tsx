@@ -36,8 +36,7 @@ const headCells = [
     {id: 'actions', numeric: true, disablePadding: false, label: 'Actions'},
 ];
 
-export default function DashboardAdminOnglet() {
-
+export const AdminOnglet = () => {
     const validateAccount = (id) => {
         console.log(id)
     }
