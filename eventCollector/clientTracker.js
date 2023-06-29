@@ -43,7 +43,7 @@ function sendEvent(event, eventDetails = {}, inactivityPeriod) {
     if (!navigator.sendBeacon('http://localhost:4000/events', beaconData)) {
         console.error('Beacon API call failed');
     }
-    
+
 
     resetSessionTimeout(inactivityPeriod);
 }
