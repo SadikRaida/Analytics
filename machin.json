@@ -1,0 +1,35 @@
+{
+    "idVisitor": "ab123cd456ef7890g1h2i3j4k5l6m7n8",
+    "userAgentInfo": {
+      "browser": {
+        "name": "Chrome",
+        "version": "83.0.4103.61",
+        "major": "83"
+      },
+      "engine": {
+        "name": "Blink"
+      },
+      "os": {
+        "name": "Windows",
+        "version": "10"
+      },
+      "device": {
+        "model": undefined,
+        "vendor": undefined,
+        "type": undefined
+      },
+      "cpu": {
+        "architecture": undefined
+      }
+    },
+    "windowDimensions": "1024x768",
+    "event": {
+      "type": "click",
+      "details": {
+        "tag": "button-tag",
+        "element": "button",
+        "action": "clicked"
+      }
+    }
+  }
+  
