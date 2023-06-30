@@ -7,4 +7,12 @@ export class CreateUserDto {
   email: string;
 
   password: string;
+
+  role: string;
+
+  society: string;
+
+  url: string;
+
+  apikey: string = null;
 }
