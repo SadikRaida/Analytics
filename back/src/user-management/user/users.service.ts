@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(
     @InjectRepository(Users)
-    private readonly userRepository: Repository<Users>,
+    private userRepository: Repository<Users>,
   ) { }
 
   /**
