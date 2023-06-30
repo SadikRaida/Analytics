@@ -11,6 +11,7 @@ export class EventsController {
     return this.eventsService.createEvent(event);
   }
 
+ //EXEMPLE D'ACCES ADMIN ONLY @UseGuards(JwtAuthGuard, new RolesGuard(Role.Admin))
   @Get()
   async getAllEvents() {
     const events = await this.eventsService.getAllEvents();

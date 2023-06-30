@@ -7,5 +7,13 @@ export class UpdateUserDto {
   email: string;
 
   password: string;
+
+  role: string;
+
+  society: string;
+
+  url: string;
+
+  apikey: string;
 }
 

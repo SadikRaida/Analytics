@@ -7,7 +7,7 @@ export class Users {
   id: string;
 
   @Column({ unique: true })
-  username: string;
+  society: string;
 
   @Column({ unique: true })
   email: string;
@@ -15,4 +15,10 @@ export class Users {
   @Column()
   @Exclude({ toPlainOnly: true })
   password: string;
+
+  @Column({ unique: false })
+  url: string;
+
+  @Column({ unique: true })
+  apikey: string;
 }
