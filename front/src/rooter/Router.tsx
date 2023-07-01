@@ -4,6 +4,8 @@ import {Route, Routes} from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
 import {Login} from "../pages/Login";
 import {Register} from "../pages/Register";
+import {SCOPES} from "./permissions";
+import SecuredPage from "./SecuredPage";
 
 interface Route {
     path: string;
@@ -18,20 +20,11 @@ export const useRoutes = () => {
             path: "/",
             name: "Home",
             element:
+            <SecuredPage scopes={[SCOPES.USER, SCOPES.ADMIN]}>
                 <HomePage/>
-        },{
-            path: "/login",
-            name: "Home",
-            element:
-                <Login/>
-        },{
-            path: "/register",
-            name: "Home",
-            element:
-                <Register/>
+            </SecuredPage>
         }
-    ] ;
-
+    ];
 
     return routes.map((route: Route) => {
        return <Route key={route.name} {...route}/>
@@ -43,12 +36,13 @@ export default function Router() {
    return (
        <Suspense>
            <Routes>
-               <Route path={'/'} element={<AppLayout/>}>
+               <Route element={<AppLayout/>}>
                    {
                        routes.map(route => route)
                    }
                </Route>
-                {/*<Route path={'/login'} element={<Login/>}/>*/}
+               <Route path={'/login'} element={<Login/>}/>
+               <Route path={'/register'} element={<Register/>}/>
            </Routes>
        </Suspense>
    )

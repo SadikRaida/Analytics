@@ -1,6 +1,6 @@
 export const ROLES = {
     ADMIN: "ROLE_ADMIN",
-    USER: "ROLE_USER"
+    USER: "ROLE_WEBMASTER"
 };
 
 export const SCOPES = {
@@ -36,7 +36,6 @@ interface Permission {
 
 export const hasPermissions = ({ permissions , scopes} : Permission ) => {
     const userScopes: {[string: string]:boolean} = {} ;
-
     scopes.forEach((scope :string  )  => {
         userScopes[scope] = true
     });
