@@ -8,14 +8,20 @@ export const Register = () => {
 
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [name, setName] = useState<string>('')
+    const [society, setSociety] = useState<string>('')
     const [url, setUrl] = useState<string>('')
     const {setUser} = useAuthContext() ;
     const navigate = useNavigate() ;
 
     const validateForm = () => {
-        AuthService.register(email, name, url).then((response) => {
-            // envoie un mail de confirmation + génération d'un token
+        AuthService.register(email, password, url, society).then((response) => {
+            if (response === undefined) {
+                navigate('/register')
+            }else {
+                localStorage.setItem('user', JSON.stringify(response))
+                setUser(response)
+                navigate('/')
+            }
         })
     }
 
@@ -56,12 +62,12 @@ export const Register = () => {
                     }}
                 />
                 <TextField
-                    type={'name'}
-                    id="name"
+                    type={'society'}
+                    id="society"
                     color={'secondary'}
                     label="Nom de votre société"
                     variant="outlined"
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setSociety(e.target.value)}
                     sx={{
                         borderRadius: 20,
                         width: '100%',

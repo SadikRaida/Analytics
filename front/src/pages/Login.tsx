@@ -13,7 +13,12 @@ export const Login = () => {
 
     const validateForm = () => {
         AuthService.login(email, password).then((response) => {
-            setUser(response) ;
+            setUser(response);
+            console.log(response)
+            if (response.access_token) {
+                localStorage.setItem('token', response.access_token)
+                navigate('/') ;
+            }
         })
     }
 

@@ -55,9 +55,6 @@ export class UserService {
 
         {
           email: identifier
-        },
-        {
-          username: identifier
         }
       ]
     });
@@ -83,9 +80,10 @@ export class UserService {
    */
   async createUser(createUserDto: CreateUserDto): Promise<Users> {
     const user = new Users();
-    user.username = createUserDto.username;
     user.email = createUserDto.email;
     user.password = await bcrypt.hash(createUserDto.password, 10);
+    user.society = createUserDto.society;
+    user.url = createUserDto.url;
     return this.userRepository.save(user);
   }
 
@@ -100,9 +98,10 @@ export class UserService {
    */
   async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<Users> {
     const user = await this.userRepository.findOneBy({ id });
-    user.username = updateUserDto.username;
     user.email = updateUserDto.email;
     user.password = await bcrypt.hash(updateUserDto.password, 10);
+    user.society = updateUserDto.society;
+    user.url = updateUserDto.url;
     return this.userRepository.save(user);
   }
 

@@ -14,14 +14,21 @@ const login = async (email:string, password:string):Promise<Response> => {
     return await response.json();
 }
 
-const register = async ():Promise<Response> => {
+const register = async (email:string, password:string, society:string, url:string):Promise<Response> => {
     try {
-        const response = await fetch(ServicesBases.apiUrl + '/authentication/profile', {
-            method: 'GET',
+        const response = await fetch(ServicesBases.apiUrl + '/users', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
+            body: JSON.stringify({
+                email: email,
+                password: password,
+                society: password,
+                url: url,
+                apikey: 'test'
+            })
         });
         if(response.status === 401) {
             localStorage.removeItem('token');

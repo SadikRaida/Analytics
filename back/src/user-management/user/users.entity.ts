@@ -19,6 +19,6 @@ export class Users {
   @Column({ unique: false })
   url: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true , nullable:true})
   apikey: string;
 }
