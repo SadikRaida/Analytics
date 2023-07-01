@@ -11,12 +11,16 @@ import ListItemText from '@mui/material/ListItemText';
 import {Home, People} from '@mui/icons-material';
 import {DashboardOnglet} from "./admin/Onglets/DashboardOnglet";
 import {AdminOnglet} from "./admin/OngletSupport/AdminOnglet";
+import {ROLES} from "../rooter/permissions";
+import {useAuthContext} from "../providers/AuthProvider";
 
 const drawerWidth = 240;
 
 export default function HomePage() {
 
     const [onglet, setOnglet] = useState('Dashboard')
+
+    const {user} = useAuthContext();
 
     const links = [
         {
@@ -75,6 +79,7 @@ export default function HomePage() {
                     <hr/>
                     <List>
                         {
+                            user.role === ROLES.ADMIN &&
                             linksSupport.map((link, index) => {
                                 return (
                                     <ListItem key={index} disablePadding onClick={() => setOnglet(link.name)}>

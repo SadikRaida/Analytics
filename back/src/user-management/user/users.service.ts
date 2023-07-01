@@ -84,6 +84,7 @@ export class UserService {
     user.password = await bcrypt.hash(createUserDto.password, 10);
     user.society = createUserDto.society;
     user.url = createUserDto.url;
+    user.role = 'ROLE_WEBMASTER';
     return this.userRepository.save(user);
   }
 

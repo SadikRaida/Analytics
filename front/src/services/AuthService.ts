@@ -1,4 +1,6 @@
 import {ServicesBases} from "./servicesBases.ts";
+import jwt_decode from "jwt-decode";
+
 
 const login = async (email:string, password:string):Promise<Response> => {
     const response = await fetch(ServicesBases.apiUrl + '/authentication/login', {
@@ -40,9 +42,31 @@ const register = async (email:string, password:string, society:string, url:strin
 
 }
 
+const getUsers = async ():Promise<Response> => {
+    const response = await fetch(ServicesBases.apiUrl + '/authentication/users', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.json();
+}
+
+const getUser = async (id:string):Promise<Response> => {
+    const response = await fetch(ServicesBases.apiUrl + '/users/' + id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    return await response.json();
+}
+
 const AuthService = {
     login,
-    register
+    register,
+    getUsers,
+    getUser
 }
 
 export default AuthService;

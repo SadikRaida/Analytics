@@ -8,6 +8,7 @@ import {BrowserRouter, useLocation} from "react-router-dom";
 import {StrictMode, useLayoutEffect} from "react";
 import ModalProvider from "./providers/ModalProvider.tsx";
 import SnackbarProvider from "react-mui-snackbar" ;
+import Header from "./layouts/Header";
 
 
 const theme = createTheme({
@@ -63,6 +64,7 @@ root.render(
                     <ModalProvider>
                         <BrowserRouter>
                             <Wrapper>
+                                <Header/>
                                 <Router>
                                 </Router>
                             </Wrapper>
