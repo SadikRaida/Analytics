@@ -2,7 +2,7 @@ version: "3"
 
 services:
   back:
-    image: node:19.0.0-alpine
+    image: node:alpine
     user: node
     working_dir: /usr/src/server
     tty: true
@@ -13,7 +13,7 @@ services:
       - ./back:/usr/src/server
 
   front:
-    image: node:19.0.0-alpine
+    image: node:alpine
     user: node
     working_dir: /usr/src/server
     tty: true
