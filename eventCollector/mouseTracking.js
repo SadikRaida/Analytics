@@ -1,5 +1,5 @@
 import throttle from 'lodash.throttle';
-import sendEvent from './clientTracker';
+import {sendEvent} from './clientTracker';
 
 let mouseTrackingEvents = [];
 
@@ -25,10 +25,12 @@ function sendBatch() {
     mouseTrackingEvents = [];
 }
 
-window.addEventListener('mousemove', throttledHandler);
-window.addEventListener('beforeunload', () => {
-    // If there are any remaining events when the user leaves the page, send them.
-    if (mouseTrackingEvents.length > 0) {
-        sendBatch();
-    }
-});
+export function initMouseTracking() {
+    window.addEventListener('mousemove', throttledHandler);
+    window.addEventListener('beforeunload', () => {
+        // If there are any remaining events when the user leaves the page, send them.
+        if (mouseTrackingEvents.length > 0) {
+            sendBatch();
+        }
+    });
+}

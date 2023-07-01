@@ -14,6 +14,16 @@ function resetSessionTimeout(inactivityPeriod) {
     }
 }
 
+
+async function eventCollect(event, eventDetails = {}, inactivityPeriod) {
+    // send event as usual
+    sendEvent(event, eventDetails, inactivityPeriod);
+    
+    // return a promise that resolves immediately
+    return Promise.resolve();
+}
+
+
 //Fonction qui prend en paramètre un nom d'event, un objet custom et une periode d'inactivité custom
 function sendEvent(event ,eventDetails = {}, inactivityPeriod) {
     const parser = new UAParser();
@@ -57,4 +67,4 @@ window.addEventListener('unload', () => {
     clearTimeout(sessionTimeout); // Ensure the timeout is removed on tab/browser close
 });
 
-export default sendEvent;
+export { sendEvent, eventCollect };
