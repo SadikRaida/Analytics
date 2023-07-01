@@ -21,13 +21,12 @@ export default function AuthProvider({children}: { children: ReactNode }) {
 
 
     useEffect(() => {
-        // if(!user ) {
-        //     if (localStorage.getItem("token") === null) {
-        //         if (window.location.pathname !== "/login")
-        //             window.location.pathname = "/login";
-        //     }
-        // }
-
+        if(!user ) {
+            if (localStorage.getItem("token") === null) {
+                if (window.location.pathname !== "/login")
+                    window.location.pathname = "/login";
+            }
+        }
     },[])
 
 

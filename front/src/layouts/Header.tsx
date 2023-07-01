@@ -1,27 +1,9 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
-import Slide from '@mui/material/Slide';
-import {Fragment, ReactElement, useState} from "react";
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import DragHandleIcon from "@mui/icons-material/DragHandle";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import LogoutIcon from '@mui/icons-material/Logout';
+import {Fragment, ReactElement} from "react";
 import styles from "./Header.module.css";
-import {ROLES} from "../rooter/permissions.ts";
-import {
-    Drawer,
-    IconButton,
-    useTheme,
-    styled,
-    Divider,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemText
-} from "@mui/material";
+import {useTheme} from "@mui/material";
 import {NavLink, useNavigate} from 'react-router-dom';
 import {useAuthContext} from "../providers/AuthProvider.tsx";
 
@@ -41,10 +23,10 @@ export default function Header(props: Props) {
     const theme = useTheme();
     const navigate = useNavigate();
 
-    // const logout = () => {
-    //     localStorage.removeItem('token');
-    //     navigate('/login');
-    // }
+    const logout = () => {
+        localStorage.removeItem('token');
+        window.location.pathname = "/login";
+    }
 
     const links = [
         {name: 'Login', path: '/login'},
@@ -92,7 +74,7 @@ export default function Header(props: Props) {
                                 }}
                             >
                                 {
-                                    links.map((link) => {
+                                    !user && links.map((link) => {
                                         return (
                                             <NavLink
                                                 className={({isActive, isPending}: Link) =>
@@ -111,6 +93,23 @@ export default function Header(props: Props) {
                                     })
                                 }
                             </Box>
+                            {
+                                user &&
+                                <Box sx={{
+                                    textAlign: 'center',
+                                }}>
+                                    <NavLink
+                                        onClick={logout}
+                                        style={{
+                                            color: theme.palette.secondary.main,
+                                            textDecoration: 'none',
+                                            margin: '0 10px',
+                                        }}
+                                    >
+                                        Logout
+                                    </NavLink>
+                                </Box>
+                            }
                         </Box>
                     </Box>
                 </Toolbar>
