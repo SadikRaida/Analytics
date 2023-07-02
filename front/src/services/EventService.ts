@@ -1,6 +1,6 @@
 import {ServicesBases} from "./servicesBases.ts";
 
-const getEvents = async ():Promise<Response> => {
+const getEvents = async ():Promise<Event[]> => {
     const response = await fetch(ServicesBases.apiUrl + '/events', {
         method: 'GET',
         headers: {
@@ -12,6 +12,6 @@ const getEvents = async ():Promise<Response> => {
 
 const EventService = {
     getEvents,
-}
+};
 
 export default EventService;
