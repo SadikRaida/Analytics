@@ -5,6 +5,7 @@ import {CardCount} from "../../../Components/CardCount";
 import {LineChart} from "../../../Components/LineChart";
 import {LineChartMultiple} from "../../../Components/LineChartMultiple";
 import {FormatDataGraph} from "../../../Lib/FormatDataGraph";
+import {PieChart} from "../../../Components/PieChart";
 
 export const DashboardOnglet = () => {
 
@@ -25,7 +26,6 @@ export const DashboardOnglet = () => {
     const filterEvents = (events:any) => {
         return events.reduce((result, item) => {
             const {eventType} = item;
-
             if (!result[eventType]) {
                 result[eventType] = []; // Initialize an empty array for the eventType
             }
@@ -66,6 +66,14 @@ export const DashboardOnglet = () => {
                                 </Grid>
                             )
                         })
+                    }
+                </Grid>
+                <Grid>
+                    {
+                        formatedData &&
+                        <PieChart
+                            formatedData={formatedData}
+                        />
                     }
                 </Grid>
                 <Grid
