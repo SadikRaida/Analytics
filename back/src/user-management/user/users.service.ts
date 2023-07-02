@@ -6,6 +6,7 @@ import { UpdateUserDto } from "./dto/update-user.dto";
 import { Users } from "./users.entity";
 import * as bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import {MailService} from "../../mail/mail.service";
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,7 @@ export class UserService {
   constructor(
     @InjectRepository(Users)
     private userRepository: Repository<Users>,
+    private readonly mailService: MailService
   ) { }
 
   /**
@@ -138,9 +140,19 @@ export class UserService {
 
   async verifyUser(id: string): Promise<Users> {
     const user = await this.userRepository.findOneBy({ id });
+    if (user.isVerified === true) throw new NotFoundException('User already verified');
     const apikey = uuidv4();
     user.isVerified = true;
     user.apikey = apikey;
+    await this.mailService.sendMail({
+        to: user.email,
+        subject: 'Votre compte a été validé',
+        text: `Votre compte a été validé, vous pouvez désormais vous connecter à l'application avec votre email et le mot de passe que vous avez choisi.
+            <br>
+            <br>
+            Voici votre Clé d'api qu'il vous faudra utiliser dans votre application : <b>${apikey}</b>
+        `
+    });
     return this.userRepository.save(user);
   }
 }
