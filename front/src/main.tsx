@@ -9,7 +9,6 @@ import {StrictMode} from "react";
 import SnackbarProvider from "react-mui-snackbar";
 import Header from "./layouts/Header";
 
-
 const theme = createTheme({
     palette: {
         primary: {

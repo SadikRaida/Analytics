@@ -36,4 +36,9 @@ export class UsersController {
   async deleteUser(@Param('id') id: string): Promise<Users> {
     return await this.userService.deleteUser(id);
   }
+
+  @Put(':id/verify')
+  async verifyUser(@Param('id') id: string): Promise<Users> {
+    return await this.userService.verifyUser(id);
+  }
 }

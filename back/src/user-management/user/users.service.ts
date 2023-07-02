@@ -5,6 +5,7 @@ import { CreateUserDto } from "./dto/create-user.dto";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import { Users } from "./users.entity";
 import * as bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class UserService {
@@ -84,7 +85,7 @@ export class UserService {
     user.password = await bcrypt.hash(createUserDto.password, 10);
     user.society = createUserDto.society;
     user.url = createUserDto.url;
-    user.role = 'ROLE_WEBMASTER';
+    user.role = createUserDto.role ? createUserDto.role : 'ROLE_WEBMASTER';
     return this.userRepository.save(user);
   }
 
@@ -133,5 +134,13 @@ export class UserService {
     const requestedUser = await this.findOne(requestedUserId);
 
     return currentUser === requestedUser;
+  }
+
+  async verifyUser(id: string): Promise<Users> {
+    const user = await this.userRepository.findOneBy({ id });
+    const apikey = uuidv4();
+    user.isVerified = true;
+    user.apikey = apikey;
+    return this.userRepository.save(user);
   }
 }

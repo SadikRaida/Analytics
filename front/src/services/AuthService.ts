@@ -60,11 +60,22 @@ const getUser = async (id:string):Promise<Response> => {
     return await response.json();
 }
 
+const verifyUser = async (id:string):Promise<Response> => {
+    const response = await fetch(ServicesBases.apiUrl + '/users/' + id + '/verify', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    return await response.json();
+}
+
 const AuthService = {
     login,
     register,
     getUsers,
-    getUser
+    getUser,
+    verifyUser
 }
 
 export default AuthService;

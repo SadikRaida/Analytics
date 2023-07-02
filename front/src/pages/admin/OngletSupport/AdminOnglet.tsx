@@ -22,14 +22,19 @@ export const AdminOnglet = () => {
     const [data, setData] = React.useState([])
     const validateAccount = (id :any) => {
         console.log(id)
+        AuthService.verifyUser(id).then((res :any) => {
+            getUsers()
+        })
+    }
+
+    const getUsers = () => {
+        AuthService.getUsers().then((res :any) => {
+            setData(res)
+        })
     }
 
     useEffect(() => {
-        AuthService.getUsers().then((res :any) => {
-            setData(res)
-        }).then(()=>{
-            console.log(data)
-        })
+        getUsers()
     }, [])
 
     return (
@@ -63,13 +68,16 @@ export const AdminOnglet = () => {
                                     {row?.url}
                                 </TableCell>
                                 {
-                                    !row?.isActive &&
+                                    !row?.isVerified ?
                                     <TableCell align={'right'}>
-                                        <Button onClick={(e) => validateAccount(e)} style={{
+                                        <Button onClick={() => validateAccount(row.id)} style={{
                                             backgroundColor: '#4caf50',
                                         }}>
-                                            Valider
+                                            Vérifier
                                         </Button>
+                                    </TableCell>
+                                        :
+                                    <TableCell align={'right'}>
                                     </TableCell>
                                 }
                             </TableRow>

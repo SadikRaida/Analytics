@@ -13,8 +13,13 @@ export const Login = () => {
 
     const validateForm = () => {
         AuthService.login(email, password).then((response :any) => {
-            setUser(response);
+            console.log(response)
+            if (response === undefined) {
+                throw new Error('Erreur de connexion, vos identifiants sont incorrects')
+                navigate('/login')
+            }
             if (response.access_token) {
+                setUser(response);
                 localStorage.setItem('token', response.access_token)
                 navigate('/') ;
             }

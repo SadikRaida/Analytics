@@ -22,6 +22,9 @@ export class Users {
   @Column({ unique: false })
   role: string;
 
+  @Column({ unique: false, default: false})
+  isVerified: boolean;
+
   @Column({ unique: true , nullable:true})
   apikey: string;
 }
