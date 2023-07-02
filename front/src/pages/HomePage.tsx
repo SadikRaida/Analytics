@@ -7,11 +7,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {Home, People} from '@mui/icons-material';
+import {Fax, Home, People} from '@mui/icons-material';
 import {DashboardOnglet} from "./admin/Onglets/DashboardOnglet";
 import {AdminOnglet} from "./admin/OngletSupport/AdminOnglet";
 import {ROLES} from "../rooter/permissions";
 import {useAuthContext} from "../providers/AuthProvider";
+import {FieldsOnglet} from "./admin/Onglets/FieldsOnglet";
 
 const drawerWidth = 240;
 
@@ -25,6 +26,10 @@ export const HomePage = () => {
         {
             name: 'Dashboard',
             icon: < Home />
+        },
+        {
+            name: 'Fields',
+            icon: < Fax />
         }
     ]
 
@@ -41,6 +46,8 @@ export const HomePage = () => {
                 return <DashboardOnglet/>
             case 'Admin':
                 return <AdminOnglet/>
+            case 'Fields':
+                return <FieldsOnglet/>
             default:
                 return <DashboardOnglet/>
         }
