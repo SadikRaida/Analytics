@@ -3,15 +3,14 @@
 up:
 	docker compose up -d
 
-prerequisites:
-	docker compose exec back npm i
-
 api:
+	docker compose exec back npm i
 	docker compose exec back npm run start:dev
 
 front:
+	docker compose exec front npm i
 	docker compose exec front npm run dev
 
 
-all: up prerequisites api
+all: up api
 
