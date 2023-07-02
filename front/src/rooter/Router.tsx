@@ -1,16 +1,16 @@
-import {ReactNode, Suspense} from "react";
-import {HomePage} from "../pages/HomePage.tsx";
-import {Route, Routes} from "react-router-dom";
+import { ReactNode, Suspense } from "react";
+import { HomePage } from "../pages/HomePage.tsx";
+import { Route, Routes } from "react-router-dom";
 import AppLayout from "../layouts/AppLayout";
-import {Login} from "../pages/Login";
-import {Register} from "../pages/Register";
-import {SCOPES} from "./permissions";
-import {SecuredPage} from "./SecuredPage";
+import { Login } from "../pages/Login";
+import { Register } from "../pages/Register";
+import { SCOPES } from "./permissions";
+import { SecuredPage } from "./SecuredPage";
 
 interface Route {
     path: string;
     name: string;
-    element: Element | ReactNode ;
+    element: ReactNode;
 }
 
 export const useRoutes = () => {
@@ -19,30 +19,29 @@ export const useRoutes = () => {
         {
             path: "/",
             name: "Home",
-            element: <HomePage />
+            element:
+                <SecuredPage scopes={[SCOPES.USER, SCOPES.ADMIN]}>
+                    <HomePage />
+                </SecuredPage>
         }
     ];
 
-    return routes.map((route: any) => {
-       return <SecuredPage scopes={[SCOPES.USER, SCOPES.ADMIN]}>
-           <Route key={route.name} {...route}/>
-       </SecuredPage>
+    return routes.map((route: Route) => {
+        return <Route key={route.name} path={route.path} element={route.element} />;
     });
 }
 
 export default function Router() {
-   const routes = useRoutes();
-   return (
-       <Suspense>
-           <Routes>
-               <Route element={<AppLayout/>} path={'/'} index={false}>
-                   {
-                       routes.map(route => route)
-                   }
-               </Route>
-               <Route path={'/login'} element={<Login/>} index={true}/>
-               <Route path={'/register'} element={<Register/>} index={true}/>
-           </Routes>
-       </Suspense>
-   )
+    const routes = useRoutes();
+    return (
+        <Suspense fallback={<div>Loading...</div>}> {/* You should provide a fallback */}
+            <Routes>
+                <Route element={<AppLayout />} path={'/'} index={false}>
+                    {routes}
+                </Route>
+                <Route path={'/login'} element={<Login />} index={true} />
+                <Route path={'/register'} element={<Register />} index={true} />
+            </Routes>
+        </Suspense>
+    )
 }
