@@ -1,36 +1,8 @@
-import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
-import { Money } from "@mui/icons-material";
-
-interface CardCountProps {
-    value: number;
-    positive: boolean;
-    sx: React.CSSProperties;
-    fieldName: string;
-}
-
-export const CardCount = ({ value, positive, sx, fieldName }: CardCountProps) => {
-    return (
-        <Card sx={sx} style={{ backgroundColor: "#063285", color: "white", borderRadius: 20, minWidth: 300 }}>
-            <CardContent>
-                <Stack alignItems="flex-start" direction="row" justifyContent="space-between" spacing={3}>
-                    <Stack spacing={1}>
-                        <Typography variant="overline">{fieldName}</Typography>
-                        <Typography variant="h4">{value}</Typography>
-                    </Stack>
-                    <Avatar sx={{ backgroundColor: positive ? 'success.main' : 'error.main', height: 56, width: 56 }}>
-                        <SvgIcon>
-                            <Money />
-                        </SvgIcon>
-                    </Avatar>
-                </Stack>
-            </CardContent>
-        </Card>
-    );
-};
 type DataItem = {
     timestamp: string;
     [key: string]: any; // substituez 'any' par le type réel des autres éléments si possible
 };
+
 export type GroupedDataItem = {
     day: string;
     items: DataItem[];
@@ -43,7 +15,7 @@ export function FormatDataGraph(data: DataItem[]): GroupedDataItem[] {
         const day = date.getDate().toString();
         const month = (date.getMonth() + 1).toString(); // Les mois sont indexés à partir de zéro, donc ajoutez 1
 
-        const groupKey = ${day}-${month};
+        const groupKey = `${day}-${month}`;
         if (!result[groupKey]) {
             result[groupKey] = [];
         }
@@ -62,7 +34,7 @@ export function FormatDataGraph(data: DataItem[]): GroupedDataItem[] {
         const formattedYear = items[0].formattedTimestamp.slice(0, 4); // Extrait l'année du premier élément
 
         return {
-            day: ${formattedDay}-${formattedMonth}-${formattedYear},
+            day: `${formattedDay}-${formattedMonth}-${formattedYear}`,
             items,
         };
     });
