@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField, Grid} from "@mui/material";
+import {Box, Button, Grid, TextField} from "@mui/material";
 import AuthService from "../services/AuthService.ts";
 import {useState} from "react";
 import {useAuthContext} from "../providers/AuthProvider.tsx";
@@ -12,8 +12,7 @@ export const Login = () => {
     const navigate = useNavigate() ;
 
     const validateForm = () => {
-        AuthService.login(email, password).then((response) => {
-            console.log(response)
+        AuthService.login(email, password).then((response :any) => {
             setUser(response);
             if (response.access_token) {
                 localStorage.setItem('token', response.access_token)

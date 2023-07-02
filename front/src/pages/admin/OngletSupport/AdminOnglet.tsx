@@ -20,13 +20,15 @@ const headCells = [
 export const AdminOnglet = () => {
 
     const [data, setData] = React.useState([])
-    const validateAccount = (id) => {
+    const validateAccount = (id :any) => {
         console.log(id)
     }
 
     useEffect(() => {
-        AuthService.getUsers().then((res) => {
+        AuthService.getUsers().then((res :any) => {
             setData(res)
+        }).then(()=>{
+            console.log(data)
         })
     }, [])
 
@@ -46,24 +48,24 @@ export const AdminOnglet = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((row) => (
+                        {data.map((row :any, key:number) => (
                             <TableRow
-                                key={row.society}
+                                key={key}
                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                             >
-                                <TableCell key={row.id} align={'left'}>
-                                    {row.society}
+                                <TableCell align={'left'}>
+                                    {row?.society}
                                 </TableCell>
-                                <TableCell key={row.id} align={'right'}>
-                                    {row.email}
+                                <TableCell align={'right'}>
+                                    {row?.email}
                                 </TableCell>
-                                <TableCell key={row.id} align={'right'}>
-                                    {row.url}
+                                <TableCell align={'right'}>
+                                    {row?.url}
                                 </TableCell>
                                 {
-                                    !row.isActive &&
-                                    <TableCell key={row.id} align={'right'}>
-                                        <Button onClick={(e) => validateAccount(e.target.value)} style={{
+                                    !row?.isActive &&
+                                    <TableCell align={'right'}>
+                                        <Button onClick={(e) => validateAccount(e)} style={{
                                             backgroundColor: '#4caf50',
                                         }}>
                                             Valider

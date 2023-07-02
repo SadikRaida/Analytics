@@ -4,10 +4,9 @@ import Router from './rooter/Router'
 import './index.css'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import AuthProvider from "./providers/AuthProvider.tsx";
-import {BrowserRouter, useLocation} from "react-router-dom";
-import {StrictMode, useLayoutEffect} from "react";
-import ModalProvider from "./providers/ModalProvider.tsx";
-import SnackbarProvider from "react-mui-snackbar" ;
+import {BrowserRouter} from "react-router-dom";
+import {StrictMode} from "react";
+import SnackbarProvider from "react-mui-snackbar";
 import Header from "./layouts/Header";
 
 
@@ -30,7 +29,7 @@ const theme = createTheme({
             dark: '#5B98D276',
         },
         error: {
-            main:'#E53F49',
+            main: '#E53F49',
             dark: '#E53F49',
         }
     },
@@ -42,17 +41,6 @@ const theme = createTheme({
     },
 });
 
-interface Props {
-    children: Element | null
-}
-
-const Wrapper = ({children} : Props) => {
-    const location = useLocation();
-    useLayoutEffect(() => {
-        window.scrollTo(0, 0);
-    }, [location.pathname]);
-    return children
-}
 const container = document.getElementById('root');
 const root = createRoot(container!); // createRoot(container!) if you use TypeScript
 root.render(
@@ -61,18 +49,12 @@ root.render(
             <ThemeProvider theme={theme}>
                 <CssBaseline/>
                 <SnackbarProvider>
-                    <ModalProvider>
-                        <BrowserRouter>
-                            <Wrapper>
-                                <Header/>
-                                <Router>
-                                </Router>
-                            </Wrapper>
-                        </BrowserRouter>
-                    </ModalProvider>
+                    <BrowserRouter>
+                        <Header/>
+                        <Router/>
+                    </BrowserRouter>
                 </SnackbarProvider>
-          </ThemeProvider>
-      </AuthProvider>
-  </StrictMode>,
-
+            </ThemeProvider>
+        </AuthProvider>
+    </StrictMode>,
 )
