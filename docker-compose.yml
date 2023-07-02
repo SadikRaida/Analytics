@@ -57,8 +57,8 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongo
 
-  pgadmin:
-    container_name: pgAdmin
+  pgadminAnalytics:
+    container_name: pgadminAnalytics
     image: dpage/pgadmin4
     restart: always
     environment:
