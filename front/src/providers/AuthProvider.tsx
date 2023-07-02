@@ -1,9 +1,9 @@
-import {createContext, ReactNode, SetStateAction, useContext, useEffect, useState} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import AuthService from "../services/AuthService.ts";
 import jwt_decode from "jwt-decode";
 
 interface AuthContextInterface {
-    user: User;
+    user: any;
     setUser: (user: User) => void;
 }
 
@@ -29,9 +29,10 @@ export default function AuthProvider({children}: { children: ReactNode }) {
         }
 
         if (localStorage.getItem("token") !== null) {
-            const decoded = jwt_decode(localStorage.getItem("token"));
+            const token: string | null = localStorage.getItem("token");
+            const decoded:any = jwt_decode(token as string);
             if (decoded.sub){
-                AuthService.getUser(decoded.sub).then((response) => {
+                AuthService.getUser(decoded.sub).then((response :any) => {
                     setUser(response);
                 })
             }

@@ -1,27 +1,17 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
-import {Fragment, ReactElement} from "react";
+import {Fragment} from "react";
 import styles from "./Header.module.css";
 import {useTheme} from "@mui/material";
-import {NavLink, useNavigate} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import {useAuthContext} from "../providers/AuthProvider.tsx";
 
-interface Props {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window?: () => Window;
-    children: ReactElement;
-}
-
-export default function Header(props: Props) {
+export default function Header() {
 
     const {user} = useAuthContext();
 
     const theme = useTheme();
-    const navigate = useNavigate();
 
     const logout = () => {
         localStorage.removeItem('token');
@@ -99,6 +89,7 @@ export default function Header(props: Props) {
                                     textAlign: 'center',
                                 }}>
                                     <NavLink
+                                        to={"/login"}
                                         onClick={logout}
                                         style={{
                                             color: theme.palette.secondary.main,

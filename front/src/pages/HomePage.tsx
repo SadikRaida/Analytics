@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -16,7 +15,7 @@ import {useAuthContext} from "../providers/AuthProvider";
 
 const drawerWidth = 240;
 
-export default function HomePage() {
+export const HomePage = () => {
 
     const [onglet, setOnglet] = useState('Dashboard')
 

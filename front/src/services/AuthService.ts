@@ -1,6 +1,4 @@
 import {ServicesBases} from "./servicesBases.ts";
-import jwt_decode from "jwt-decode";
-
 
 const login = async (email:string, password:string):Promise<Response> => {
     const response = await fetch(ServicesBases.apiUrl + '/authentication/login', {
@@ -27,7 +25,7 @@ const register = async (email:string, password:string, society:string, url:strin
             body: JSON.stringify({
                 email: email,
                 password: password,
-                society: password,
+                society: society,
                 url: url,
                 apikey: 'test'
             })
@@ -36,14 +34,14 @@ const register = async (email:string, password:string, society:string, url:strin
             localStorage.removeItem('token');
         }
         return await response.json();
-    } catch (error) {
+    } catch (error :any) {
         return error;
     }
 
 }
 
 const getUsers = async ():Promise<Response> => {
-    const response = await fetch(ServicesBases.apiUrl + '/authentication/users', {
+    const response = await fetch(ServicesBases.apiUrl + '/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',

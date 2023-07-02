@@ -1,13 +1,12 @@
 import {PERMISSIONS, hasPermissions, useRole} from "./permissions.ts";
 import {useAuthContext} from "../providers/AuthProvider.tsx";
 import PermissionDeniedPage from "../pages/error/PermissionDeniedPage.tsx";
-import {ReactNode} from "react";
 
 interface Permission {
     permissions: string[];
     scopes: string[];
 }
-export default function ({children , scopes= []}: {children: Element | Element[] , scopes: string[]}) {
+export const SecuredPage = ({children , scopes= []}: {children: Element | Element[] , scopes: string[]}) => {
      const { user } = useAuthContext() ;
      if(user && user.role) {
          const role: string | null  = useRole(user) ;
@@ -30,3 +29,4 @@ export default function ({children , scopes= []}: {children: Element | Element[]
          window.location.href = "/login";
      }
 }
+

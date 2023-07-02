@@ -1,4 +1,4 @@
-import {Box, Button, Stack, TextField, Grid} from "@mui/material";
+import {Box, Button, TextField, Grid} from "@mui/material";
 import AuthService from "../services/AuthService.ts";
 import {useState} from "react";
 import {useAuthContext} from "../providers/AuthProvider.tsx";
@@ -14,7 +14,7 @@ export const Register = () => {
     const navigate = useNavigate() ;
 
     const validateForm = () => {
-        AuthService.register(email, password, url, society).then((response) => {
+        AuthService.register(email, password, url, society).then((response :any) => {
             if (response === undefined) {
                 navigate('/register')
             }else {
