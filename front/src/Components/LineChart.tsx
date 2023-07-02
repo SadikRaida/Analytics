@@ -9,8 +9,6 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { faker } from '@faker-js/faker';
-
 
 ChartJS.register(
     CategoryScale,
@@ -22,14 +20,24 @@ ChartJS.register(
     Legend
 );
 
-export const LineChart = ({title, datas}) => {
-    const labels = datas.map((data) => data.day)
+type LineChartDataItem = {
+    day: string;
+    items: any[]; // substituez 'any' par le type des éléments si possible
+};
 
-    const options:any = {
+type LineChartProps = {
+    title: string;
+    datas: LineChartDataItem[];
+};
+
+export const LineChart = ({ title, datas }: LineChartProps) => {
+    const labels = datas.map((data: LineChartDataItem) => data.day);
+
+    const options: any = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top' as const,
+                position: 'top',
             },
             title: {
                 display: true,
@@ -37,16 +45,16 @@ export const LineChart = ({title, datas}) => {
             },
         },
     };
-    const data:any = {
+    const data: any = {
         labels,
         datasets: [
             {
                 label: title,
-                data: datas.map((data) => data.items.length),
+                data: datas.map((data: LineChartDataItem) => data.items.length),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
         ],
     };
     return <Line options={options} data={data} />;
-}
+};
