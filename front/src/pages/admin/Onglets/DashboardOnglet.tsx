@@ -1,20 +1,22 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import EventService from "../../../services/EventService";
-import {Box, Container, Grid} from "@mui/material";
-import {CardCount} from "../../../Components/CardCount";
-import {LineChart} from "../../../Components/LineChart";
-import {LineChartMultiple} from "../../../Components/LineChartMultiple";
-import {FormatDataGraph} from "../../../Lib/FormatDataGraph";
-import {PieChart} from "../../../Components/PieChart";
+import { Box, Container, Grid } from "@mui/material";
+import { CardCount } from "../../../Components/CardCount";
+import { LineChart } from "../../../Components/LineChart";
+import { LineChartMultiple } from "../../../Components/LineChartMultiple";
+import { FormatDataGraph } from "../../../Lib/FormatDataGraph";
+import { PieChart } from "../../../Components/PieChart";
 
 export const DashboardOnglet = () => {
 
     const [formatedData, setFormatedData] = useState<any[]>([])
+    const [dataPie, setDataPie] = useState<any[]>([])
     const [loading, setLoading] = useState<boolean>(true)
 
     const getUsers = () => {
         EventService.getEvents().then((events: any) => {
             setFormatedData(filterEvents(events))
+            setDataPie(filterPie(events))
         })
     }
 
@@ -23,9 +25,23 @@ export const DashboardOnglet = () => {
         setLoading(false)
     }, [])
 
-    const filterEvents = (events:any) => {
+    const filterPie = (events: any) => {
+        const datasPie = events.filter((event: any) => event.eventType === "RegistrationFailed" || event.eventType === "RegistrationSuccess")
+        return datasPie.reduce((result, item) => {
+            const { eventType } = item;
+            if (!result[eventType]) {
+                result[eventType] = []; // Initialize an empty array for the eventType
+            }
+
+            result[eventType].push(item); // Push the item into the corresponding array
+
+            return result;
+        }, {});
+    }
+
+    const filterEvents = (events: any) => {
         return events.reduce((result, item) => {
-            const {eventType} = item;
+            const { eventType } = item;
             if (!result[eventType]) {
                 result[eventType] = []; // Initialize an empty array for the eventType
             }
@@ -35,6 +51,8 @@ export const DashboardOnglet = () => {
             return result;
         }, {});
     };
+
+    console.log(formatedData)
 
     return (
         !loading &&
@@ -59,7 +77,7 @@ export const DashboardOnglet = () => {
                                 <Grid item>
                                     <CardCount
                                         positive
-                                        sx={{height: '100%'}}
+                                        sx={{ height: '100%' }}
                                         value={formatedData[key].length}
                                         fieldName={key}
                                     />
@@ -68,11 +86,20 @@ export const DashboardOnglet = () => {
                         })
                     }
                 </Grid>
-                <Grid>
+                <Grid
+                    container
+                    sm={12}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        maxWidth: '500px',
+                    }}
+                    spacing={5}
+                >
                     {
-                        formatedData &&
+                        dataPie &&
                         <PieChart
-                            formatedData={formatedData}
+                            datas={dataPie}
                         />
                     }
                 </Grid>
