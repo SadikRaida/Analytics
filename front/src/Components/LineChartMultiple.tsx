@@ -22,7 +22,6 @@ ChartJS.register(
 );
 
 export const LineChartMultiple = ({ labels, datas }) => {
-    // get function from lib folder
     const options = {
         responsive: true,
         plugins: {
