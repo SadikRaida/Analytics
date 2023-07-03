@@ -37,7 +37,7 @@ export const PieChart = ({ datas }) => {
 function generateColors(count) {
     const colors = [];
     for (let i = 0; i < count; i++) {
-        const color = `rgba(${ getRandomValue(0, 255) }, ${ getRandomValue(0, 255) }, ${ getRandomValue(0, 255) }, 0.2)`;
+        const color = rgba(${ getRandomValue(0, 255) }, ${ getRandomValue(0, 255) }, ${ getRandomValue(0, 255) }, 0.2);
         colors.push(color);
     }
     return colors;
