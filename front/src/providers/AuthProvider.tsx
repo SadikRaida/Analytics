@@ -1,6 +1,7 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import AuthService from "../services/AuthService.ts";
 import jwt_decode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface AuthContextInterface {
     user: any;
@@ -17,14 +18,14 @@ interface User {
 const AuthContext = createContext<AuthContextInterface>({} as AuthContextInterface);
 export default function AuthProvider({children}: { children: ReactNode }) {
 
-
+    const navigate = useNavigate();
     const [user, setUser] = useState<User>();
 
     useEffect(() => {
         if(!user) {
             if (localStorage.getItem("token") === null) {
                 if (window.location.pathname !== "/login")
-                    window.location.pathname = "/login";
+                    navigate('/login');
             }
         }
 

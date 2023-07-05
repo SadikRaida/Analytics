@@ -2,6 +2,7 @@ import { PERMISSIONS, hasPermissions, useRole } from "./permissions.ts";
 import { useAuthContext } from "../providers/AuthProvider.tsx";
 import PermissionDeniedPage from "../pages/error/PermissionDeniedPage.tsx";
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Permission {
     permissions: string[];
@@ -10,6 +11,8 @@ interface Permission {
 
 export const SecuredPage = ({ children, scopes = [] }: { children: ReactNode, scopes: string[] }) => {
     const { user } = useAuthContext();
+    const navigate = useNavigate();
+
     if (user && user.role) {
         const role: string | null = useRole(user);
 
@@ -28,7 +31,7 @@ export const SecuredPage = ({ children, scopes = [] }: { children: ReactNode, sc
         }
     }
     else if (localStorage.getItem("token") === null) {
-        window.location.href = "/login";
+    navigate('/login');
     }
     return null; // Always return a React Element
 }

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import {Fragment} from "react";
 import styles from "./Header.module.css";
 import {useTheme} from "@mui/material";
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 import {useAuthContext} from "../providers/AuthProvider.tsx";
 
 export default function Header() {
@@ -13,9 +13,11 @@ export default function Header() {
 
     const theme = useTheme();
 
+    const navigate = useNavigate();
+
     const logout = () => {
         localStorage.removeItem('token');
-        window.location.pathname = "/login";
+        navigate('/login');
     }
 
     const links = [
