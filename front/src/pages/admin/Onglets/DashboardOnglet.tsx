@@ -120,7 +120,7 @@ export const DashboardOnglet = () => {
                     {
                         formatedData && Object.keys(formatedData).map((key: any, index: number) => {
 
-                            const datas = FormatDataGraph(formatedData[key], key)
+                            const datas = FormatDataGraph(formatedData[key])
                             return <Grid key={key} sm={12} sx={{
                                 height: '100%',
                                 width: '100%'
