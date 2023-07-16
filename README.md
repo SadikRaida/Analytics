@@ -47,9 +47,13 @@ La fonction sendEvent prend en paramètre :
 - un objet personnalisé selon les besoins que l'on a 
 - et une apiKey (que nous n'avons pas réussi à faire fonctionner donc toutes les requetes passent sans qu'elle ne soit renseigner)
 
-// envoyer un event si l'inscription est réussie
-sendEvent('RegistrationSuccess', { tag: 'Inscription', message: 'Inscription Réussie.' }, apiKey);
 
+Exemple d'utilisation où l'on va envoyer un event si l'inscription est réussie :
+```sh
+
+sendEvent('RegistrationSuccess', { tag: 'Inscription', message: 'Inscription Réussie' }, apiKey);
+
+```
 
 La fonction initMouseTracking elle sera à lancer chargement d'une nouvelle page et se chargera de récolter toutes les données de déplacements de la souris passivement
 
