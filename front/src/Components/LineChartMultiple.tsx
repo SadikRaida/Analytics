@@ -21,12 +21,12 @@ ChartJS.register(
     Legend
 );
 
-export const LineChartMultiple = ({ labels, datas }) => {
+export const LineChartMultiple = ({ datas }: { datas: any }) => {
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top',
+                position: 'top' as const,
             },
             title: {
                 display: true,
@@ -40,7 +40,7 @@ export const LineChartMultiple = ({ labels, datas }) => {
         return formattedData.map((data) => data.day);
     });
 
-    const datasets = Object.keys(datas).map((key, index) => {
+    const datasets = Object.keys(datas).map((key) => {
         const formattedData = FormatDataGraph(datas[key]);
         const chartValues = formattedData.map((data) => data.items.length);
         return {
@@ -62,6 +62,6 @@ export const LineChartMultiple = ({ labels, datas }) => {
 }
 
 // Helper function to generate random values for RGB colors
-function getRandomValue(min, max) {
+function getRandomValue(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }

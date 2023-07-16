@@ -3,44 +3,34 @@ import EventService from "../../../services/EventService";
 import { Box, Container, Grid } from "@mui/material";
 import { CardCount } from "../../../Components/CardCount";
 import { LineChart } from "../../../Components/LineChart";
-import { LineChartMultiple } from "../../../Components/LineChartMultiple";
 import { FormatDataGraph } from "../../../Lib/FormatDataGraph";
 import { PieChart } from "../../../Components/PieChart";
 
 export const DashboardOnglet = () => {
-
-    const [formatedData, setFormatedData] = useState<any[]>([])
-    const [dataPie, setDataPie] = useState<any[]>([])
-    const [loading, setLoading] = useState<boolean>(true)
+    const [formatedData, setFormatedData] = useState<any>({});
+    const [dataPie, setDataPie] = useState<any[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const getUsers = () => {
         EventService.getEvents().then((events: any) => {
-            setFormatedData(filterEvents(events))
-            setDataPie(filterPie(events))
-        })
-    }
+            setFormatedData(filterEvents(events));
+            setDataPie(filterPie(events));
+        });
+    };
 
     useEffect(() => {
-        getUsers()
-        setLoading(false)
-    }, [])
+        getUsers();
+        setLoading(false);
+    }, []);
 
     const filterPie = (events: any) => {
-        const datasPie = events.filter((event: any) => event.eventType === "RegistrationFailed" || event.eventType === "RegistrationSuccess")
-        return datasPie.reduce((result, item) => {
-            const { eventType } = item;
-            if (!result[eventType]) {
-                result[eventType] = []; // Initialize an empty array for the eventType
-            }
-
-            result[eventType].push(item); // Push the item into the corresponding array
-
-            return result;
-        }, {});
-    }
-
-    const filterEvents = (events: any) => {
-        return events.reduce((result, item) => {
+        const datasPie = events.filter(
+            (event: any) =>
+                event.eventType === "RegistrationPageVisited" ||
+                event.eventType === "RegistrationFailed" ||
+                event.eventType === "RegistrationSuccess"
+        );
+        return datasPie.reduce((result: any, item: any) => {
             const { eventType } = item;
             if (!result[eventType]) {
                 result[eventType] = []; // Initialize an empty array for the eventType
@@ -52,32 +42,39 @@ export const DashboardOnglet = () => {
         }, {});
     };
 
-    console.log(formatedData)
+    const filterEvents = (events: any) => {
+        return events.reduce((result: any, item: any) => {
+            const { eventType } = item;
+            if (!result[eventType]) {
+                result[eventType] = []; // Initialize an empty array for the eventType
+            }
+
+            result[eventType].push(item); // Push the item into the corresponding array
+
+            return result;
+        }, {});
+    };
+
+    console.log(formatedData);
 
     return (
-        !loading &&
-        <Container>
-            Votre Dashboard
-            <Box
-                component="main"
-                sx={{
-                    flexGrow: 1,
-                    py: 8
-                }}
-            >
-                <Grid
-                    container
-                    sm={12}
-
-                    spacing={5}
+        !loading && (
+            <Container>
+                Votre Dashboard
+                <Box
+                    component="main"
+                    sx={{
+                        flexGrow: 1,
+                        py: 8,
+                    }}
                 >
-                    {
-                        formatedData && Object.keys(formatedData).map((key: any, index: number) => {
+                    <Grid container sm={12} spacing={5}>
+                        {Object.keys(formatedData).map((key: any) => {
                             return (
-                                <Grid item>
+                                <Grid item key={key}>
                                     <CardCount
                                         positive
-                                        sx={{ height: '100%' }}
+                                        sx={{ height: "100%" }}
                                         value={formatedData[key].length}
                                         fieldName={key}
                                     />
