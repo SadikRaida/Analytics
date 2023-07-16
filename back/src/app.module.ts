@@ -33,8 +33,7 @@ import { MailModule } from './mail/mail.module';
     ConfigModule.forRoot(),
     EventsModule,
     FieldsModule,
-    MailModule,
-    TypeOrmModule.forFeature([Users])
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

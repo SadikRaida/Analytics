@@ -1,25 +1,20 @@
-import {Body, Controller, Get, InternalServerErrorException, Post} from '@nestjs/common';
-import {EventsService} from './events.service';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { EventsService } from './events.service';
+import { Event } from './event.interface';
 
 @Controller('events')
 export class EventsController {
-    constructor(private readonly eventsService: EventsService) {
-    }
+    constructor(private readonly eventsService: EventsService) {}
 
     @Post()
     createEvent(@Body() event: any) {
         return this.eventsService.createEvent(event);
     }
 
+    //EXEMPLE D'ACCES ADMIN ONLY @UseGuards(JwtAuthGuard, new RolesGuard(Role.Admin))
     @Get()
-    async getAllEvents(@Body() apiKey: any) {
-        try {
-            const apikey = apiKey.apikey;
-            const events = await this.eventsService.getAllEvents();
-
-            return events.filter(event => event.data.apiKey === apikey);
-        } catch (err) {
-            throw new InternalServerErrorException('Failed to get events', err.message);
-        }
+    async getAllEvents() {
+        const events = await this.eventsService.getAllEvents();
+        return events.map(event => event.data);
     }
 }
