@@ -25,7 +25,7 @@ async function eventCollect(event, eventDetails = {}, inactivityPeriod) {
 
 
 //Fonction qui prend en paramètre un nom d'event, un objet custom et une periode d'inactivité custom
-function sendEvent(event ,eventDetails = {}, inactivityPeriod) {
+async function sendEvent(event, eventDetails = {}, inactivityPeriod, apiKey) {
     const parser = new UAParser();
     const result = parser.getResult();
 
@@ -34,6 +34,7 @@ function sendEvent(event ,eventDetails = {}, inactivityPeriod) {
     const data = {
         idVisitor,
         idSession,
+        apiKey,
         eventType: event,
         timestamp: new Date().toISOString(),
         pageUrl: window.location.href,
@@ -53,15 +54,27 @@ function sendEvent(event ,eventDetails = {}, inactivityPeriod) {
         data: data,
     };
 
-    const beaconData = new Blob([JSON.stringify(wrappedData)], {type: 'application/json'});
+    try {
+        const response = await fetch('http://localhost:4000/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify(wrappedData)
+        });
 
-    // Use Beacon API instead of axios
-    if (!navigator.sendBeacon('http://localhost:4000/events', beaconData)) {
-        console.error('Beacon API call failed');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+    } catch (error) {
+        console.error('Fetch API call failed: ', error);
     }
-    
+
     resetSessionTimeout(inactivityPeriod);
 }
+
 
 window.addEventListener('unload', () => {
     clearTimeout(sessionTimeout); // Ensure the timeout is removed on tab/browser close

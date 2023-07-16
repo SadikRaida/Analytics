@@ -105,6 +105,7 @@ export class UserService {
     user.email = updateUserDto.email;
     user.password = await bcrypt.hash(updateUserDto.password, 10);
     user.society = updateUserDto.society;
+    user.role = updateUserDto.role
     user.url = updateUserDto.url;
     return this.userRepository.save(user);
   }
@@ -154,5 +155,9 @@ export class UserService {
         `
     });
     return this.userRepository.save(user);
+  }
+
+  async findByApiKey(apiKey: string): Promise<Users> {
+    return await this.userRepository.findOne({ where: { apikey: apiKey } });
   }
 }

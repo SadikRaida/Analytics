@@ -24,3 +24,30 @@ Pour cela, nous disposon du site j'irais bruler chez vous,
      - nx serve api-<nom_api>
 
 
+## Se servir du SDK
+
+Il vous suffira simplement de faire un 
+```sh
+
+npm i raidalytics
+
+```
+ puis dans votre code d'importer les 2 fonctions (l'une permet l'envoi de data plus ou moins customisé et l'autre l'envoi des données de mouseTracking ) : 
+
+
+import { sendEvent, initMouseTracking } from "raidalytics";
+
+La fonction sendEvent prend en paramètre : 
+- un type d'event
+- un objet personnalisé selon les besoins que l'on a 
+- et une apiKey (que nous n'avons pas réussi à faire fonctionner donc toutes les requetes passent sans qu'elle ne soit renseigner)
+
+// envoyer un event si l'inscription est réussie
+sendEvent('RegistrationSuccess', { tag: 'Inscription', message: 'Inscription Réussie.' }, apiKey);
+
+
+La fonction initMouseTracking elle sera à lancer chargement d'une nouvelle page et se chargera de récolter toutes les données de déplacements de la souris passivement
+
+
+Nous n'offrons pas la possibilité sur notre application de customiser ses kpi donc nous avons exporter les données de test que nous utilisions afin que tu puisse tout de même voir les graphes contenant les data obtenu d'une application. 
+Le fichier est à importer dans mongo-express localhost:5050.
