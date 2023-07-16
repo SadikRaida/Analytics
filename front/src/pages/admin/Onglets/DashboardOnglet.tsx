@@ -79,51 +79,58 @@ export const DashboardOnglet = () => {
                                         fieldName={key}
                                     />
                                 </Grid>
-                            );
-                        })}
-                    </Grid>
-                    <Grid
-                        container
-                        sm={12}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            maxWidth: "500px",
-                        }}
-                        spacing={5}
-                    >
-                        {dataPie && <PieChart datas={dataPie} />}
-                    </Grid>
-                    <Grid
-                        container
-                        sm={12}
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            maxWidth: "500px",
-                        }}
-                        spacing={5}
-                    >
-                        {dataPie && <PieChart datas={formatedData} />}
-                    </Grid>
-                    <Grid
-                        container
-                        spacing={5}
-                        sx={{
-                            marginTop: 5,
-                        }}
-                    >
-                        {Object.keys(formatedData).map((key: any) => {
-                            const datas = FormatDataGraph(formatedData[key]);
-                            return (
-                                <Grid key={key} item sm={12} sx={{ height: "100%", width: "100%" }}>
-                                    <LineChart datas={datas} title={key} />
-                                </Grid>
-                            );
-                        })}
-                    </Grid>
-                </Box>
-            </Container>
-        )
-    );
-};
+                            )
+                        })
+                    }
+                </Grid>
+                <Grid
+                    container
+                    sm={12}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        maxWidth: '500px',
+                    }}
+                    spacing={5}
+                >
+                    {
+                        dataPie &&
+                        <PieChart
+                            datas={dataPie}
+                        />
+                    }
+                </Grid>
+                <Grid
+                    container
+                    spacing={5}
+                    sx={{
+                        marginTop: 5
+                    }}
+                >
+                    {
+                        formatedData &&
+                        <LineChartMultiple
+                            labels={Object.keys(formatedData)}
+                            datas={formatedData}
+                        />
+                    }
+                    {
+                        formatedData && Object.keys(formatedData).map((key: any, index: number) => {
+
+                            const datas = FormatDataGraph(formatedData[key])
+                            return <Grid key={key} sm={12} sx={{
+                                height: '100%',
+                                width: '100%'
+                            }}>
+                                <LineChart
+                                    datas={datas}
+                                    title={key}
+                                />
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Box>
+        </Container>
+    )
+}
