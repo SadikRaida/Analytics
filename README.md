@@ -50,4 +50,5 @@ La fonction initMouseTracking elle sera à lancer chargement d'une nouvelle page
 
 
 Nous n'offrons pas la possibilité sur notre application de customiser ses kpi donc nous avons exporter les données de test que nous utilisions afin que tu puisse tout de même voir les graphes contenant les data obtenu d'une application. 
-Le fichier est à importer dans mongo-express localhost:5050.
+Le fichier est à la racine du projet et est à importer dans mongo-express localhost:8080.
+Tu peux aussi trouver le fichier sur https://we.tl/t-OGHuKAI7UW
