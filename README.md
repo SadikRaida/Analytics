@@ -6,6 +6,7 @@
 
 ###  Lancement de l'api
     - docker compose exec back npm i
+    - docker compose exec back npm run seed
     - docker compose exec back npm run start:dev
 
 ###  Lancement du front
@@ -13,6 +14,10 @@
     - docker compose exec front npm run dev
 
 ## Utiliser l'analytics 
+
+Compte Admin qui permet la validation des comptes clients: 
+user : admin@admin.com
+mdp  : admin
 
 L'analytics est connecté peut être connecté à n'importe quel site en utilisant des events dans ceux-ci qui vont permettront d'alimenter la base de donnée analytics.
 Celui-ci dispose d'un système d'authentification avec des droits admin/user.
