@@ -10,7 +10,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EventsModule } from './events/events.module';
 import { FieldsModule } from './fields/fields.module';
 import { MailModule } from './mail/mail.module';
-import {Users} from "./user-management/user/users.entity";
 
 
 @Module({

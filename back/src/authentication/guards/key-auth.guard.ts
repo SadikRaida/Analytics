@@ -17,7 +17,7 @@ export class ApiKeyGuard implements CanActivate {
             throw new UnauthorizedException('Authorization header is missing');
         }
 
-        const apiKey = authHeader.split(' ')[1]; 
+        const apiKey = authHeader.split(' ')[1];
 
         const user = await this.usersService.findByApiKey(apiKey);
 

@@ -1,22 +1,19 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import EventService from "../../../services/EventService";
-import {Box, Container, Grid} from "@mui/material";
-import {CardCount} from "../../../Components/CardCount";
-import {LineChart} from "../../../Components/LineChart";
-import {FormatDataGraph} from "../../../Lib/FormatDataGraph";
-import {PieChart} from "../../../Components/PieChart";
+import { Box, Container, Grid } from "@mui/material";
+import { CardCount } from "../../../Components/CardCount";
+import { LineChart } from "../../../Components/LineChart";
+import { FormatDataGraph } from "../../../Lib/FormatDataGraph";
+import { PieChart } from "../../../Components/PieChart";
 import {LineChartMultiple} from "../../../Components/LineChartMultiple";
-import {useAuthContext} from "../../../providers/AuthProvider";
 
 export const DashboardOnglet = () => {
     const [formatedData, setFormatedData] = useState<any>({});
     const [dataPie, setDataPie] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const {user} = useAuthContext();
 
     const getUsers = () => {
-        // récupérer les events qui disposent de la même apikey que l'utilisateur
-        EventService.getEvents(user.apikey).then((events: any) => {
+        EventService.getEvents().then((events: any) => {
             setFormatedData(filterEvents(events));
             setDataPie(filterPie(events));
         });
@@ -35,7 +32,7 @@ export const DashboardOnglet = () => {
                 event.eventType === "RegistrationSuccess"
         );
         return datasPie.reduce((result: any, item: any) => {
-            const {eventType} = item;
+            const { eventType } = item;
             if (!result[eventType]) {
                 result[eventType] = []; // Initialize an empty array for the eventType
             }
@@ -48,7 +45,7 @@ export const DashboardOnglet = () => {
 
     const filterEvents = (events: any) => {
         return events.reduce((result: any, item: any) => {
-            const {eventType} = item;
+            const { eventType } = item;
             if (!result[eventType]) {
                 result[eventType] = []; // Initialize an empty array for the eventType
             }
@@ -78,7 +75,7 @@ export const DashboardOnglet = () => {
                                 <Grid item key={key}>
                                     <CardCount
                                         positive
-                                        sx={{height: "100%"}}
+                                        sx={{ height: "100%" }}
                                         value={formatedData[key].length}
                                         fieldName={key}
                                     />
