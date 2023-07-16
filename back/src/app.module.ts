@@ -10,6 +10,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { EventsModule } from './events/events.module';
 import { FieldsModule } from './fields/fields.module';
 import { MailModule } from './mail/mail.module';
+import {Users} from "./user-management/user/users.entity";
 
 
 @Module({
@@ -33,7 +34,8 @@ import { MailModule } from './mail/mail.module';
     ConfigModule.forRoot(),
     EventsModule,
     FieldsModule,
-    MailModule
+    MailModule,
+    TypeOrmModule.forFeature([Users])
   ],
   controllers: [AppController],
   providers: [AppService],

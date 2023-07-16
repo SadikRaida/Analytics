@@ -19,6 +19,11 @@ export const Login = () => {
                 navigate('/login')
             }
             if (response.access_token) {
+                if(response.isVerified === false){
+                    alert("Votre compte n'a pas encore été vérifié");
+                    localStorage.removeItem('token');
+                    return;
+                };
                 setUser(response);
                 localStorage.setItem('token', response.access_token)
                 navigate('/') ;

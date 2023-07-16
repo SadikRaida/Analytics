@@ -19,8 +19,7 @@ export const Register = () => {
                 navigate('/register')
             }else {
                 localStorage.setItem('user', JSON.stringify(response))
-                setUser(response)
-                navigate('/')
+                navigate('/login')
             }
         })
     }
@@ -51,6 +50,7 @@ export const Register = () => {
                 />
                 <TextField
                     id="password"
+                    type={'password'}
                     label="Mot de passe"
                     color={'secondary'}
                     variant="outlined"

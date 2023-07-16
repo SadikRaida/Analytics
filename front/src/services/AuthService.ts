@@ -1,6 +1,7 @@
 import {ServicesBases} from "./servicesBases.ts";
 
 const login = async (email:string, password:string):Promise<Response> => {
+
     const response = await fetch(ServicesBases.apiUrl + '/authentication/login', {
         method: 'POST',
         headers: {
@@ -11,6 +12,7 @@ const login = async (email:string, password:string):Promise<Response> => {
             password: password,
         })
     });
+
     return await response.json();
 }
 

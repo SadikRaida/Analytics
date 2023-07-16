@@ -6,14 +6,17 @@ import {LineChart} from "../../../Components/LineChart";
 import {FormatDataGraph} from "../../../Lib/FormatDataGraph";
 import {PieChart} from "../../../Components/PieChart";
 import {LineChartMultiple} from "../../../Components/LineChartMultiple";
+import {useAuthContext} from "../../../providers/AuthProvider";
 
 export const DashboardOnglet = () => {
     const [formatedData, setFormatedData] = useState<any>({});
     const [dataPie, setDataPie] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const {user} = useAuthContext();
 
     const getUsers = () => {
-        EventService.getEvents().then((events: any) => {
+        // récupérer les events qui disposent de la même apikey que l'utilisateur
+        EventService.getEvents(user.apikey).then((events: any) => {
             setFormatedData(filterEvents(events));
             setDataPie(filterPie(events));
         });

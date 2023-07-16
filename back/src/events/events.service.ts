@@ -1,8 +1,7 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { CreateEventDto } from './dto/create-event.dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Event } from './event.interface';
+import {Injectable, InternalServerErrorException} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
+import {Event} from './event.interface';
 
 @Injectable()
 export class EventsService {
